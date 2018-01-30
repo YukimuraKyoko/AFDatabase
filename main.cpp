@@ -7,6 +7,15 @@
 #include <tchar.h>
 #include <windows.h>
 
+/*
+Self notes:
+CreateWindow parameters: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632679(v=vs.85).aspx
+
+*/
+
+
+HWND textfield;
+
 /*  Declare Windows procedure  */
 LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
 
@@ -82,6 +91,16 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 {
     switch (message)                  /* handle the messages */
     {
+        case WM_CREATE:
+
+        //Creates a static text box at position (20,20) in x,y coordinates
+        //with 100 as the width and 20 as the height
+        textfield = CreateWindow("STATIC",
+                                 "Hello World", WS_VISIBLE | WS_CHILD | WS_BORDER,
+                                 20, 20, 100, 20,
+                                 hwnd, NULL, NULL, NULL);
+
+        break;
         case WM_DESTROY:
             PostQuitMessage (0);       /* send a WM_QUIT to the message queue */
             break;
