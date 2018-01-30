@@ -14,7 +14,7 @@ CreateWindow parameters: https://msdn.microsoft.com/en-us/library/windows/deskto
 */
 
 
-HWND textfield;
+HWND textfield, button;
 
 /*  Declare Windows procedure  */
 LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
@@ -99,6 +99,12 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                                  "Hello World", WS_VISIBLE | WS_CHILD | WS_BORDER,
                                  20, 20, 100, 20,
                                  hwnd, NULL, NULL, NULL);
+
+        button = CreateWindow("BUTTON",
+                              "This is a button",
+                              WS_VISIBLE | WS_CHILD | WS_BORDER,
+                              20, 50, 200, 20,
+                              hwnd, NULL, NULL, NULL);
 
         break;
         case WM_DESTROY:
