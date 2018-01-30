@@ -56,7 +56,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     hwnd = CreateWindowEx (
            0,                   /* Extended possibilites for variation */
            szClassName,         /* Classname */
-           _T("Auto Freak Database"),       /* Title Text */
+           "Auto Freak Database",       /* Title Text */
            WS_OVERLAPPEDWINDOW, /* default window */
            CW_USEDEFAULT,       /* Windows decides the position */
            CW_USEDEFAULT,       /* where the window ends up on the screen */
@@ -101,12 +101,31 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                                  hwnd, NULL, NULL, NULL);
 
         button = CreateWindow("BUTTON",
-                              "This is a button",
+                              "Pop up",
                               WS_VISIBLE | WS_CHILD | WS_BORDER,
-                              20, 50, 200, 20,
-                              hwnd, NULL, NULL, NULL);
+                              20, 100, 200, 20,
+                              hwnd, (HMENU)1, NULL, NULL);
 
-        break;
+        button = CreateWindow("BUTTON",
+                              "Close",
+                              WS_VISIBLE | WS_CHILD | WS_BORDER,
+                              20, 400, 80, 20,
+                              hwnd, (HMENU)2, NULL, NULL);
+
+            break;
+
+        case WM_COMMAND:
+            switch(LOWORD(wParam))
+            {
+            case 1:
+                ::MessageBox(hwnd,"Button was clicked", "Button was clicked", MB_OK);
+                break;
+            case 2:
+                PostQuitMessage (0);
+                break;
+            }
+            break;
+
         case WM_DESTROY:
             PostQuitMessage (0);       /* send a WM_QUIT to the message queue */
             break;
