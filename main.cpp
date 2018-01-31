@@ -13,7 +13,7 @@ CreateWindow parameters: https://msdn.microsoft.com/en-us/library/windows/deskto
 
 */
 
-
+//Initial Variables
 HWND textfield, button, textbox;
 int winWidth = 800;
 int winHeight = 600;
