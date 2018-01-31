@@ -14,13 +14,17 @@ CreateWindow parameters: https://msdn.microsoft.com/en-us/library/windows/deskto
 */
 
 
-HWND textfield, button;
+HWND textfield, button, textbox;
+int winWidth = 800;
+int winHeight = 600;
+char szClassName[] = "TextEntry";
+char textSaved[20];
 
 /*  Declare Windows procedure  */
 LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
 
 /*  Make the class name into a global variable  */
-TCHAR szClassName[ ] = _T("CodeBlocksWindowsApp");
+//TCHAR szClassName[ ] = _T("CodeBlocksWindowsApp");
 
 int WINAPI WinMain (HINSTANCE hThisInstance,
                      HINSTANCE hPrevInstance,
@@ -45,7 +49,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     wincl.lpszMenuName = NULL;                 /* No menu */
     wincl.cbClsExtra = 0;                      /* No extra bytes after the window class */
     wincl.cbWndExtra = 0;                      /* structure or the window instance */
-    /* Use Windows's default colour as the background of the window */
+    /* Use Windows's default color as the background of the window */
     wincl.hbrBackground = (HBRUSH) COLOR_BACKGROUND;
 
     /* Register the window class, and if it fails quit the program */
@@ -56,12 +60,12 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     hwnd = CreateWindowEx (
            0,                   /* Extended possibilites for variation */
            szClassName,         /* Classname */
-           "Auto Freak Database",       /* Title Text */
+           _T("Auto Freak Database"),       /* Title Text */
            WS_OVERLAPPEDWINDOW, /* default window */
            CW_USEDEFAULT,       /* Windows decides the position */
            CW_USEDEFAULT,       /* where the window ends up on the screen */
-           800,                 /* The programs width */
-           600,                 /* and height in pixels */
+           winWidth,                 /* The programs width */
+           winHeight,                 /* and height in pixels */
            HWND_DESKTOP,        /* The window is a child-window to desktop */
            NULL,                /* No menu */
            hThisInstance,       /* Program Instance handler */
@@ -96,21 +100,36 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
         //Creates a static text box at position (20,20) in x,y coordinates
         //with 100 as the width and 20 as the height
         textfield = CreateWindow("STATIC",
-                                 "Hello World", WS_VISIBLE | WS_CHILD | WS_BORDER,
+                                 "Auto Freak", WS_VISIBLE | WS_CHILD | WS_BORDER,
                                  20, 20, 100, 20,
                                  hwnd, NULL, NULL, NULL);
 
+        //Creates a pop up window with text
         button = CreateWindow("BUTTON",
                               "Pop up",
                               WS_VISIBLE | WS_CHILD | WS_BORDER,
                               20, 100, 200, 20,
                               hwnd, (HMENU)1, NULL, NULL);
 
+        //Creates a button to close the window
         button = CreateWindow("BUTTON",
                               "Close",
                               WS_VISIBLE | WS_CHILD | WS_BORDER,
                               20, 400, 80, 20,
                               hwnd, (HMENU)2, NULL, NULL);
+
+        //Creates a textbox to type in a string
+        textbox = CreateWindow("EDIT",
+                               "",
+                               WS_VISIBLE | WS_CHILD | WS_BORDER,
+                               winWidth/2, winHeight/2, 200, 20,
+                               hwnd, NULL, NULL, NULL);
+        //Storing the string from textbox
+        CreateWindow("BUTTON",
+                     "Go",
+                     WS_VISIBLE | WS_CHILD | WS_BORDER,
+                     winWidth/2 + 210, winHeight/2, 70, 20,
+                     hwnd, (HMENU)3, NULL, NULL);
 
             break;
 
@@ -122,6 +141,13 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                 break;
             case 2:
                 PostQuitMessage (0);
+                break;
+            case 3:
+                int getText = 0;
+                char *t = &textSaved[0];
+                getText = GetWindowText(textbox, &textSaved[0] ,20);
+
+                ::MessageBox(hwnd, textSaved, textSaved, MB_OK);
                 break;
             }
             break;
