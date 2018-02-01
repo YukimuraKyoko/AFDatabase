@@ -1,4 +1,4 @@
-# GraphicalWindow
+# Auto Freak Database
 
 My very first initial side project using tutorials from Ryan Shank's youtube videos.
 Link: https://www.youtube.com/channel/UCruQgsJ75J1R_TMuu9A665Q
